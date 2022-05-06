@@ -1,0 +1,5 @@
+exclude tests/*
+include tests/__init__.py
+include tests/test_reports.py
+include tests/mitumori.pdf
+include field_reports/*

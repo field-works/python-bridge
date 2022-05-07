@@ -23,7 +23,7 @@ class ExecProxy(Proxy):
             self.logout.write(err.decode('utf-8'))
             if proc.returncode != 0:
                 raise RuntimeError("Exit Code = {0}".format(proc.returncode))
-            return out.decode()
+            return out.decode().rstrip()
         except Exception as exn:
             raise ReportsError(self._exn_message(exn)) from exn
 

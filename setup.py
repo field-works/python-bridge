@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name = 'field_reports', 
-    version = '2.0.0rc3',
+    version = '2.0.0',
     author = 'Field Works, LLC',
     author_email = 'support@field-works.co.jp',
     url = 'https://field-works.co.jp/',

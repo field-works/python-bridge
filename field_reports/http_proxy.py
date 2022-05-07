@@ -11,7 +11,7 @@ class HttpProxy(Proxy):
         try:
             req = request.Request(parse.urljoin(self.base_address, "version"))
             with request.urlopen(req) as res:
-                return res.read().decode()
+                return res.read().decode().rstrip()
         except error.HTTPError as exn:
             raise ReportsError(self._http_exn_message(exn)) from exn
         except Exception as exn:

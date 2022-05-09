@@ -1,18 +1,16 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
+from six import raise_from
 import subprocess
-from typing import IO
 from field_reports.proxy import *
 
 class ExecProxy(Proxy):
-    def __init__(self, exe_path: str, cwd: str,
-        loglevel: int, logout: IO):
+    def __init__(self, exe_path, cwd, loglevel, logout):
         self.exe_path = exe_path
         self.cwd = cwd
         self.loglevel = loglevel
         self.logout = logout
 
-    def version(self) -> str:
+    def version(self):
         try:
             proc = subprocess.Popen(
                 [self.exe_path, 'version'],
@@ -25,9 +23,9 @@ class ExecProxy(Proxy):
                 raise RuntimeError("Exit Code = {0}".format(proc.returncode))
             return out.decode().rstrip()
         except Exception as exn:
-            raise ReportsError(self._exn_message(exn)) from exn
+            raise_from(ReportsError(self._exn_message(exn)), exn)
 
-    def render(self, param: ReportsParam) -> bytes:
+    def render(self, param):
         try:
             proc = subprocess.Popen(
                 [self.exe_path, 'render', '-l' + str(self.loglevel), '-', '-'],
@@ -41,9 +39,9 @@ class ExecProxy(Proxy):
                 raise RuntimeError("Exit Code = {0}".format(proc.returncode))
             return out
         except Exception as exn:
-            raise ReportsError(self._exn_message(exn)) from exn
+            raise_from(ReportsError(self._exn_message(exn)), exn)
 
-    def parse(self, pdf: bytes) -> dict:
+    def parse(self, pdf):
         import json
         try:
             proc = subprocess.Popen(
@@ -58,7 +56,7 @@ class ExecProxy(Proxy):
                 raise RuntimeError("Exit Code = {0}".format(proc.returncode))
             return json.loads(out.decode('utf-8'))
         except Exception as exn:
-            raise ReportsError(self._exn_message(exn)) from exn
+            raise_from(ReportsError(self._exn_message(exn)), exn)
     
     def _exn_message(self, exn):
         return "Process terminated abnormally: {0}.".format(exn)

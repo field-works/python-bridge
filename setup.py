@@ -10,4 +10,7 @@ setup(name = 'field_reports',
     license = 'BSD-3-Clause',
     description = 'Field Reports is PDF report genaration tool.',
     packages = ['field_reports'],
+    install_requires=[
+        "six",
+    ]
 )

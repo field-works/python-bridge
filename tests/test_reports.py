@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 import unittest
 import sys
-import os
 
 from field_reports import Bridge, ReportsError
 
@@ -11,11 +8,13 @@ class TestReports(unittest.TestCase):
     def setUp(self):
         self.reports = Bridge.create_proxy()
 
-    def test_バージョンが取得できる(self):
+    def test_version(self):
+        """バージョンが取得できる"""
         version = self.reports.version()
         self.assertEqual(version[:2], '2.')
 
-    def test_JSON文字列を元にPDFを生成できる(self): 
+    def test_render_string(self): 
+        """JSON文字列を元にPDFを生成できる"""
         param = """{
             "template": {"paper": "A4"},
             "context": {
@@ -30,7 +29,8 @@ class TestReports(unittest.TestCase):
         self.assertEqual(pdf[:8], b'%PDF-1.6')
         self.assertEqual(pdf[-6:], b'%%EOF\n')
 
-    def test_辞書形式パラメータを元にPDFを生成できる(self): 
+    def test_render_dict(self): 
+        """辞書形式パラメータを元にPDFを生成できる"""
         param = {
             "template": {"paper": "A4"},
             "context": {
@@ -45,12 +45,14 @@ class TestReports(unittest.TestCase):
         self.assertEqual(pdf[:8], b'%PDF-1.6')
         self.assertEqual(pdf[-6:], b'%%EOF\n')
 
-    def test_パースエラーで例外が発生する(self): 
+    def test_render_error(self): 
+        """パースエラーで例外が発生する"""
         with self.assertRaises(ReportsError):
             param = "{,}"
             pdf = self.reports.render(param)
 
-    def test_PDFデータを解析できる(self):
+    def test_parse(self):
+        """PDFデータを解析できる"""
         with open('tests/mitumori.pdf', 'rb') as f:
             result = self.reports.parse(f.read())
             self.assertIsInstance(result, dict)

@@ -1,18 +1,15 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 import sys
 import os
-from field_reports.proxy import Proxy
 from field_reports.http_proxy import HttpProxy
 from field_reports.exec_proxy import ExecProxy
 
 """
 Field Reportsと連携するためのProxyオブジェクトを生成します。
-
 """
 class Bridge:
     @staticmethod
-    def create_proxy(uri = None) -> Proxy:
+    def create_proxy(uri = None):
         """引数で与えられるURIに応じたField Reports Proxyオブジェクトを返却します。
 
         Example:
@@ -45,11 +42,11 @@ class Bridge:
             Proxy: Field Reports Proxyオブジェクト
 
         """
-        from urllib.parse import urlparse, parse_qs
+        from six.moves.urllib import parse
         uri = os.environ.get('REPORTS_PROXY', "exec:reports") if not uri else uri
-        u = urlparse(uri);
+        u = parse.urlparse(uri);
         if u.scheme == 'exec':
-            q = parse_qs(u.query)
+            q = parse.parse_qs(u.query)
             exe_path = u.path
             cwd = q['cwd'] if 'cwd' in q else "."
             loglevel = int(q['loglevel']) if 'loglevel' in q else 0
@@ -60,7 +57,7 @@ class Bridge:
     @staticmethod
     def create_exec_proxy(
         exe_path="reports", cwd=".",
-        loglevel=0, logout=sys.stderr) -> Proxy:
+        loglevel=0, logout=sys.stderr):
         """コマンド呼び出しによりField Reportsと連携するProxyオブジェクトを生成します。
 
         Args:
@@ -70,19 +67,19 @@ class Bridge:
             logout (TextIO, optional): ログ出力先Stream
 
         Returns:
-            ReportsProxy: Field Reports Proxyオブジェクト
+            Proxy: Field Reports Proxyオブジェクト
         """
         return ExecProxy(exe_path, cwd, loglevel, logout)
 
     @staticmethod
-    def create_http_proxy(base_address="http://localhost:50080/") -> Proxy:
+    def create_http_proxy(base_address="http://localhost:50080/"):
         """HTTP通信によりField Reportsと連携するProxyオブジェクトを生成します。
 
         Args:
             base_address (str, optional): ベースUri
 
         Returns:
-            ReportsProxy: Field Reports Proxyオブジェクト
+            Proxy: Field Reports Proxyオブジェクト
 
         Note:
             reportsコマンドがサーバーモードで起動していることが前提となります。

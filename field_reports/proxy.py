@@ -1,19 +1,11 @@
-#!/usr/bin/env python
-
-from abc import ABCMeta, abstractmethod
-from typing import Union
-
-ReportsParam = Union[str, bytes, dict]
+# -*- coding: utf-8 -*-
 
 """
 Field Reportsの機能を呼び出すためのProxyインターフェースです。
-
-Field Works, LLC. <https://www.field-works.co.jp/>
 """
-class Proxy(metaclass=ABCMeta):
+class Proxy:
 
-    @abstractmethod
-    def version(self) -> str:
+    def version(self):
         """バージョン番号を取得します。
 
         Returns:
@@ -25,8 +17,7 @@ class Proxy(metaclass=ABCMeta):
         raise NotImplementedError()
 
 
-    @abstractmethod
-    def render(self, param: ReportsParam) -> bytes:
+    def render(self, param):
         """レンダリング・パラメータを元にレンダリングを実行します。
 
         Args:
@@ -43,8 +34,7 @@ class Proxy(metaclass=ABCMeta):
         """
         raise NotImplementedError()
 
-    @abstractmethod
-    def parse(self, pdf: bytes) -> dict:
+    def parse(self, pdf):
         """PDFデータを解析し，フィールドや注釈の情報を取得します。
 
         Args:
@@ -58,7 +48,7 @@ class Proxy(metaclass=ABCMeta):
         """
         raise NotImplementedError()
 
-    def to_jbytes(self, param: ReportsParam):
+    def to_jbytes(self, param):
         import json
         if isinstance(param, str):
             return param.encode('utf-8')
@@ -68,7 +58,7 @@ class Proxy(metaclass=ABCMeta):
             return param
 
 class ReportsError(Exception):
-    def __init__(self, message: str):
+    def __init__(self, message):
         self.message = message
 
     def __str__(self):

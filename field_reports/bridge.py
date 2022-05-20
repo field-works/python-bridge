@@ -10,7 +10,7 @@ Field Reportsと連携するためのProxyオブジェクトを生成します�
 class Bridge:
     @staticmethod
     def create_proxy(uri = None):
-        """引数で与えられるURIに応じたField Reports Proxyオブジェクトを返却します。
+        """URIに応じたField Reports Proxyオブジェクトを返却します。
 
         Example:
             >>> # コマンド連携時
@@ -25,7 +25,7 @@ class Bridge:
         Args:
             uri (str, optional): Field Reportsとの接続方法を示すURI．
             省略した場合，環境変数'REPORTS_PROXY'よりURIを取得します.   
-            環境変数'REPORTS_PROXY'も未設定の場合のURIは，"exec:reports"とします。
+            環境変数'REPORTS_PROXY'も未設定の場合の既定値は"exec:reports"です。
 
             コマンド連携時:
 
@@ -76,7 +76,7 @@ class Bridge:
         """HTTP通信によりField Reportsと連携するProxyオブジェクトを生成します。
 
         Args:
-            base_address (str, optional): ベースUri
+            base_address (str, optional): ベースURI
 
         Returns:
             Proxy: Field Reports Proxyオブジェクト

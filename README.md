@@ -46,7 +46,7 @@ https://www.field-works.co.jp/製品情報/
 pipコマンドを利用して，インストール媒体のwheelファイルをインストールしてください。
 
 ```
-$ pip install field_reports-2.0.0-py3-none-any.whl
+$ pip3 install field_reports-2.0.0-py3-none-any.whl
 ```
 
 ### GitHubからのインストール
@@ -54,7 +54,7 @@ $ pip install field_reports-2.0.0-py3-none-any.whl
 GitHubに登録されているソースコードからインストールする場合は，以下のコマンドを実行してください。
 
 ```
-$ pip install git+https://github.com/field-works/python-bridge.git@2.0.0
+$ pip3 install git+https://github.com/field-works/python-bridge.git@2.0.0
 ```
 
 ## 動作確認
@@ -86,7 +86,6 @@ $ reports server -l3
 次に，以下のコマンドを実行してください
 
 ```
-$ irb
 $ python3
 >>> import field_reports
 >>> reports = field_reports.Bridge.create_proxy("http://localhost:50080/")

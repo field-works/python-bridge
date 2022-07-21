@@ -67,7 +67,7 @@ $ python3
 >>> import field_reports
 >>> reports = field_reports.Bridge.create_proxy("exec:/usr/local/bin/reports")
 >>> reports.version()
-'2.0.0rc4'
+'2.0.0rc5'
 >>> reports.render({})
 b"%PDF-1.6\n%\x80\x81\x82\x83\n..."
 ```
@@ -90,7 +90,7 @@ $ python3
 >>> import field_reports
 >>> reports = field_reports.Bridge.create_proxy("http://localhost:50080/")
 >>> reports.version()
-'2.0.0rc4'
+'2.0.0rc5'
 >>> reports.render({})
 b"%PDF-1.6\n%\x80\x81\x82\x83\n..."
 ```
